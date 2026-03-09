@@ -1,0 +1,6 @@
+
+{
+  "name": "Gemini Interior Color Customizer",
+  "description": "An interactive interior design tool that uses Gemini Nano Banana to detect hotspots and repaint furniture or architectural elements in real-time.",
+  "requestFramePermissions": []
+}

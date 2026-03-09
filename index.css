@@ -1,0 +1,12 @@
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+:root {
+  color-scheme: light;
+}
+
+input, textarea, select {
+  background-color: white;
+  color: black;
+}
