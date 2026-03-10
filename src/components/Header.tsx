@@ -1,22 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 
-interface NavigationLink {
-    text: string;
-    href: string;
-    target?: string;
-}
-
-interface SocialLink {
-    href: string;
-    icon: 'facebook' | 'instagram' | 'twitter' | 'pinterest';
-}
-
 const Header: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+    const [isScrolled, setIsScrolled] = useState(false);
     const { logout } = useAuth();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const handleScroll = () => setIsScrolled(window.scrollY > 20);
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const toggleMenu = (): void => {
         setIsMenuOpen(!isMenuOpen);
@@ -27,354 +23,229 @@ const Header: React.FC = () => {
         navigate('/login');
     };
 
-    const navigationLinks: NavigationLink[] = [
-        { text: 'Home', href: 'https://kmigroups.com/' },
-        { text: 'AI Design Studios', href: 'https://kmigroups.com/ai-design' },
-        { text: 'Product Studio', href: 'https://kmigroups.com/product-category', target: '_blank' },
-        { text: 'Catalogue', href: 'https://kmigroups.com/catalog', target: '_blank' },
-        { text: 'Contact us', href: 'https://kmigroups.com/contact', target: '_blank' }
+    const navigationLinks = [
+        { text: 'Home', href: 'https://ranksol.com/' },
+        { text: 'Services', href: 'https://ranksol.com/services/', target: '_blank' },
+        { text: 'Portfolio', href: 'https://ranksol.com/portfolio/', target: '_blank' },
+        { text: 'Case Studies', href: 'https://ranksol.com/case-studies/', target: '_blank' },
+        { text: 'Contact', href: 'https://ranksol.com/contact/', target: '_blank' },
     ];
 
-    const socialLinks: SocialLink[] = [
-        { href: 'https://www.facebook.com/kmigroup.com.pk', icon: 'facebook' },
-        { href: 'https://www.instagram.com/kmigroup.official/', icon: 'instagram' },
-        { href: 'https://x.com/thekmigroup', icon: 'twitter' },
-        { href: 'https://www.pinterest.com/kmigroup/', icon: 'pinterest' }
+    const socialLinks = [
+        {
+            href: 'https://www.facebook.com/ranksol',
+            label: 'Facebook',
+            icon: (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                </svg>
+            )
+        },
+        {
+            href: 'https://www.instagram.com/ranksol/',
+            label: 'Instagram',
+            icon: (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                    <circle cx="12" cy="12" r="4" />
+                    <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" strokeWidth="0" />
+                </svg>
+            )
+        },
+        {
+            href: 'https://x.com/ranksol',
+            label: 'Twitter/X',
+            icon: (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+            )
+        },
+        {
+            href: 'https://www.linkedin.com/company/ranksol',
+            label: 'LinkedIn',
+            icon: (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                    <rect x="2" y="9" width="4" height="12" />
+                    <circle cx="4" cy="4" r="2" />
+                </svg>
+            )
+        },
     ];
 
     return (
-        <div className="bg-[#EFE223] w-full z-50">
-            <div className="max-w-[1440px] mx-auto h-[90px] relative">
-                <nav className="flex justify-between items-center h-full px-4 w-full relative">
-                    {/* Logo */}
-                    <div className="logo z-50">
-                        <a href="https://kmigroups.com/" className="flex items-center gap-[7px] no-underline">
-                            <img src="https://kmigroups.com/images/logo.webp" alt="logo" />
-                        </a>
-                    </div>
+        <>
+            <header
+                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+                    ? 'bg-white/95 backdrop-blur-md shadow-lg shadow-black/10 border-b border-gray-100'
+                    : 'bg-white border-b border-gray-100'
+                    }`}
+            >
+                <div className="max-w-[1440px] mx-auto px-4 lg:px-8">
+                    <nav className="flex items-center justify-between h-[72px]">
 
-                    {/* Desktop Navigation */}
-                    <ul className="hidden lg:flex items-center gap-6">
-                        {navigationLinks.map((link, index) => (
-                            <li key={index}>
-                                <a
-                                    href={link.href}
-                                    className="text-black text-[18px] font-semibold no-underline hover:opacity-70 transition-opacity"
-                                    target={link.target || '_self'}
-                                    rel={link.target ? 'noopener noreferrer' : ''}
-                                >
-                                    {link.text}
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-
-                    {/* Desktop Actions */}
-                    <div className="hidden lg:flex items-center gap-4">
-                        <button
-                            onClick={handleLogout}
-                            className="bg-black text-white px-4 py-2 rounded-[5px] text-[18px] font-semibold hover:opacity-70 transition-opacity"
-                        >
-                            Logout
-                        </button>
-                        <div className="flex items-center gap-2 mr-2">
-                            {/* Facebook */}
-                            <a
-                                href="https://www.facebook.com/kmigroup.com.pk"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="hover:scale-110 transition-transform"
-                            >
-                                <svg
-                                    width="31"
-                                    height="31"
-                                    viewBox="0 0 32 32"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    {/* Outer Circle */}
-                                    <circle
-                                        cx="16"
-                                        cy="16"
-                                        r="15"
-                                        stroke="black"
-                                        strokeWidth="1"
-                                        fill="none"
-                                    />
-
-                                    {/* Facebook Icon */}
-                                    <path
-                                        d="M17.2 10.2H18.8V7.3C18.5 7.3 17.6 7.2 16.5 7.2C14.2 7.2 12.6 8.7 12.6 11.3V13.7H10V16.9H12.6V23H15.9V16.9H18.5L19 13.7H15.9V11.6C15.9 10.7 16.3 10.2 17.2 10.2Z"
-                                        fill="black"
-                                    />
-                                </svg>
-                            </a>
-
-                            {/* Instagram */}
-                            <a
-                                href="https://www.instagram.com/kmigroup.official/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="hover:scale-110 transition-transform"
-                            >
-                                <svg
-                                    width="31"
-                                    height="31"
-                                    viewBox="0 0 32 32"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    {/* Outer Border Circle */}
-                                    <circle
-                                        cx="16"
-                                        cy="16"
-                                        r="15"
-                                        stroke="black"
-                                        strokeWidth="1"
-                                        fill="none"
-                                    />
-
-                                    {/* Instagram Icon */}
-                                    <path
-                                        d="M19.8 9H11.2C10 9 9 10 9 11.2V19.8C9 21 10 22 11.2 22H19.8C21 22 22 21 22 19.8V11.2C22 10 21 9 19.8 9ZM16.5 19.2C14.6 19.2 13.1 17.7 13.1 15.8C13.1 13.9 14.6 12.4 16.5 12.4C18.4 12.4 19.9 13.9 19.9 15.8C19.9 17.7 18.4 19.2 16.5 19.2ZM20 12.3C19.4 12.3 18.9 11.8 18.9 11.2C18.9 10.6 19.4 10.1 20 10.1C20.6 10.1 21.1 10.6 21.1 11.2C21.1 11.8 20.6 12.3 20 12.3Z"
-                                        fill="black"
-                                    />
-                                </svg>
-                            </a>
-
-                            {/* Twitter/X */}
-                            <a
-                                href="https://x.com/thekmigroup"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="hover:scale-110 transition-transform"
-                            >
-                                <svg
-                                    width="31"
-                                    height="31"
-                                    viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    {/* Outer circle */}
-                                    <circle
-                                        cx="10"
-                                        cy="10"
-                                        r="9.375"
-                                        fill="none"
-                                        stroke="black"
-                                        strokeWidth="1"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        vectorEffect="non-scaling-stroke"
-                                    />
-
-                                    {/* Inner X */}
-                                    <g transform="translate(5,5) scale(0.5)">
-                                        <path
-                                            d="M6.67102 5.36279L13.2324 13.7454H14.2334L7.74486 5.36279H6.67102Z"
-                                            fill="black"
-                                        />
-                                        <path
-                                            d="M12.7314 14.7979L9.87386 11.1507L6.59774 14.7979H4.78677L9.01843 10.0713L4.55017 4.35233H8.2904L10.8749 7.69492L13.8689 4.35233H15.6799L11.7212 8.783L16.3806 14.7979H12.7314Z"
-                                            fill="black"
-                                        />
-                                    </g>
-                                </svg>
-                            </a>
-
-                            {/* Pinterest */}
-                            <a
-                                href="https://www.pinterest.com/kmigroup/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="hover:scale-110 transition-transform"
-                            >
-                                <svg
-                                    width="31"
-                                    height="31"
-                                    viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    {/* Outer circle */}
-                                    <circle
-                                        cx="10"
-                                        cy="10"
-                                        r="9.375"
-                                        fill="none"
-                                        stroke="black"
-                                        strokeWidth="1"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        vectorEffect="non-scaling-stroke"
-                                    />
-
-                                    {/* Inner Pinterest "P" */}
-                                    <g transform="translate(5,5) scale(0.50)">
-                                        <path
-                                            d="M6.08572 18.4946C6.00194 17.737 5.92634 16.5718 6.11897 15.7448
-            C6.29289 14.9975 7.24173 10.9854 7.24173 10.9854
-            C7.24173 10.9854 6.95526 10.4118 6.95526 9.56373
-            C6.95526 8.23235 7.72695 7.23836 8.68786 7.23836
-            C9.50471 7.23836 9.89938 7.85169 9.89938 8.58715
-            C9.89938 9.40878 9.37632 10.6369 9.1063 11.7751
-            C8.88076 12.7283 9.58427 13.5055 10.5243 13.5055
-            C12.2262 13.5055 13.5344 11.7111 13.5344 9.12075
-            C13.5344 6.82824 11.8869 5.2253 9.53474 5.2253
-            C6.81028 5.2253 5.21109 7.26877 5.21109 9.38058
-            C5.21109 10.2036 5.52808 11.086 5.92369 11.5657
-            C6.00186 11.6605 6.01338 11.7436 5.99011 11.8403
-            C5.91737 12.1428 5.7559 12.7932 5.72414 12.9263
-            C5.68236 13.1015 5.58534 13.1387 5.40393 13.0543
-            C4.20802 12.4975 3.46036 10.7493 3.46036 9.34489
-            C3.46036 6.32443 5.65487 3.55062 9.787 3.55062
-            C13.1086 3.55062 15.69 5.91744 15.69 9.08062
-            C15.69 12.3806 13.6093 15.0363 10.7213 15.0363
-            C9.75105 15.0363 8.83889 14.5323 8.52674 13.9369
-            C8.52674 13.9369 8.0465 15.7651 7.93012 16.2131
-            C7.71386 17.0449 7.13038 18.0874 6.74005 18.7233Z"
-                                            fill="black"
-                                        />
-                                    </g>
-                                </svg>
-
+                        {/* Logo */}
+                        <div className="flex items-center gap-3 z-50">
+                            <a href="https://ranksol.com/" className="flex items-center gap-3 no-underline group">
+                                {/* RankSol Logo Mark */}
+                                <div className="w-10 h-10 bg-[#FF6B00] rounded-xl flex items-center justify-center shadow-lg shadow-orange-200 group-hover:shadow-orange-300 transition-shadow">
+                                    <span className="text-white font-black text-lg leading-none">R</span>
+                                </div>
+                                <div className="flex flex-col leading-none">
+                                    <span className="text-[#0A0A0A] font-black text-[18px] tracking-tight">Rank<span className="text-[#FF6B00]">Sol</span></span>
+                                    <span className="text-[10px] text-gray-400 font-medium tracking-widest uppercase">Design Studio</span>
+                                </div>
                             </a>
                         </div>
-                    </div>
 
-                    {/* Hamburger (Mobile) */}
-                    <div
-                        id="hamburger"
-                        className="lg:hidden flex flex-col cursor-pointer z-50"
-                        onClick={toggleMenu}
-                    >
-                        <span className={`w-[25px] h-[3px] bg-black my-[3px] transition-all ${isMenuOpen ? 'rotate-45 translate-y-[9px]' : ''}`}></span>
-                        <span className={`w-[25px] h-[3px] bg-black my-[3px] transition-all ${isMenuOpen ? 'opacity-0' : ''}`}></span>
-                        <span className={`w-[25px] h-[3px] bg-black my-[3px] transition-all ${isMenuOpen ? '-rotate-45 -translate-y-[9px]' : ''}`}></span>
-                    </div>
-                </nav>
-
-                {/* Mobile Menu */}
-                <div
-                    id="mobile-menu"
-                    className={`${isMenuOpen ? 'flex' : 'hidden'} fixed inset-0 z-40 bg-[#EFE223] flex-col items-center justify-center gap-6 py-20 transition-all duration-300 overflow-y-auto`}
-                >
-                    <ul className="flex flex-col items-center gap-6 w-full px-4 mt-20">
-                        {navigationLinks.map((link, index) => (
-                            <li key={index} className="w-full">
-                                {link.href.startsWith('/') ? (
-                                    <Link
-                                        to={link.href}
-                                        className="block w-full py-2 text-center text-black text-[24px] font-bold"
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        {link.text}
-                                    </Link>
-                                ) : (
+                        {/* Desktop Navigation */}
+                        <ul className="hidden lg:flex items-center gap-1">
+                            {navigationLinks.map((link, index) => (
+                                <li key={index}>
                                     <a
                                         href={link.href}
-                                        className="block w-full py-2 text-center text-black text-[24px] font-bold"
+                                        className="relative px-4 py-2 text-[14px] font-semibold text-gray-700 hover:text-[#FF6B00] transition-colors duration-200 group no-underline rounded-lg hover:bg-orange-50"
                                         target={link.target || '_self'}
                                         rel={link.target ? 'noopener noreferrer' : ''}
-                                        onClick={() => setIsMenuOpen(false)}
                                     >
                                         {link.text}
                                     </a>
-                                )}
-                            </li>
-                        ))}
-                        <li className="w-full">
+                                </li>
+                            ))}
+                        </ul>
+
+                        {/* Desktop Actions */}
+                        <div className="hidden lg:flex items-center gap-3">
+                            {/* Social Icons */}
+                            <div className="flex items-center gap-1.5">
+                                {socialLinks.map((social, i) => (
+                                    <a
+                                        key={i}
+                                        href={social.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label={social.label}
+                                        className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-500 hover:text-[#FF6B00] hover:bg-orange-50 transition-all duration-200"
+                                    >
+                                        {social.icon}
+                                    </a>
+                                ))}
+                            </div>
+
+                            <div className="w-px h-6 bg-gray-200"></div>
+
+                            {/* Logout Button */}
                             <button
-                                onClick={() => {
-                                    setIsMenuOpen(false);
-                                    handleLogout();
-                                }}
-                                className="block w-full py-2 text-center text-black text-[24px] font-bold"
+                                onClick={handleLogout}
+                                className="flex items-center gap-2 px-5 py-2.5 bg-[#FF6B00] text-white text-[13px] font-bold rounded-xl hover:bg-[#E05E00] transition-all duration-200 shadow-md shadow-orange-200 hover:shadow-orange-300 active:scale-95"
                             >
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                    <polyline points="16 17 21 12 16 7" />
+                                    <line x1="21" y1="12" x2="9" y2="12" />
+                                </svg>
                                 Logout
                             </button>
-                        </li>
-                    </ul>
+                        </div>
 
-                    {/* Mobile Social Links */}
-                    <div className="flex gap-6 mt-auto mb-10">
-                        {/* Facebook */}
-                        <a
-                            href="https://www.facebook.com/kmigroup.com.pk"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                        {/* Hamburger (Mobile) */}
+                        <button
+                            id="hamburger"
+                            className="lg:hidden flex flex-col justify-center items-center w-10 h-10 rounded-xl hover:bg-orange-50 transition-colors z-50"
+                            onClick={toggleMenu}
+                            aria-label="Toggle menu"
                         >
-                            <svg width="42" height="42" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-                                <circle cx="16" cy="16" r="15" stroke="black" strokeWidth="0.75" fill="white"></circle>
-                                <path d="M17 10.4h1.9V8.1c-.3 0-1.1-.1-2.1-.1-2.2 0-3.7 1.3-3.7 3.7v2.1H10.9v2.6h2.2V24h2.7v-7.6h2.2l.3-2.6h-2.5v-1.8c0-.8.3-1.6 1.2-1.6Z" fill="black"></path>
-                            </svg>
-                        </a>
+                            <span className={`block w-5 h-0.5 bg-[#0A0A0A] transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-[5px]' : ''}`}></span>
+                            <span className={`block w-5 h-0.5 bg-[#0A0A0A] my-1 transition-all duration-300 ${isMenuOpen ? 'opacity-0 scale-x-0' : ''}`}></span>
+                            <span className={`block w-5 h-0.5 bg-[#0A0A0A] transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-[5px]' : ''}`}></span>
+                        </button>
+                    </nav>
+                </div>
+            </header>
 
-                        {/* Instagram */}
-                        <a
-                            href="https://www.instagram.com/kmigroup.official/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <svg width="43" height="43" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M30.5947 15.4861C30.5947 7.14197 23.8305 0.377708 15.4863 0.377708C7.14219 0.377708 0.37793 7.14197 0.37793 15.4861C0.37793 23.8302 7.14219 30.5945 15.4863 30.5945C23.8305 30.5945 30.5947 23.8302 30.5947 15.4861Z" stroke="black" strokeWidth="0.75542" strokeLinecap="round" strokeLinejoin="round"></path>
-                                <g transform="translate(10.5 10.5) scale(1)">
-                                    <path d="M4.90885 2.3928C3.51557 2.3928 2.39213 3.51655 2.39213 4.91023C2.39213 6.30391 3.51557 7.42766 4.90885 7.42766C6.30214 7.42766 7.42558 6.30391 7.42558 4.91023C7.42558 3.51655 6.30214 2.3928 4.90885 2.3928ZM4.90885 6.54904C4.00845 6.54904 3.27326 5.81364 3.27326 4.91298C3.27326 4.01233 4.00845 3.27693 4.90885 3.27693C5.80926 3.27693 6.54445 4.01233 6.54445 4.91298C6.54445 5.81364 5.80926 6.54904 4.90885 6.54904ZM8.11671 2.29089C8.11671 2.61865 7.85513 2.87756 7.53021 2.87756C7.2053 2.87756 6.94371 2.6159 6.94371 2.29089C6.94371 1.96588 7.2053 1.70422 7.53021 1.70422C7.85513 1.70422 8.11671 1.96588 8.11671 2.29089ZM9.78535 2.88582C9.7468 2.09809 9.56782 1.40125 8.99233 0.828356C8.4196 0.255462 7.72021 0.0736776 6.93545 0.0351173C6.12591 -0.0117058 3.69455 -0.0117058 2.88501 0.0351173C2.10025 0.0736776 1.40361 0.252707 0.828124 0.825601C0.252637 1.3985 0.0736569 2.09809 0.0351075 2.88306C-0.0117025 3.69283 -0.0117025 6.12488 0.0351075 6.93464C0.0736569 7.72237 0.252637 8.41921 0.828124 8.9921C1.40361 9.565 2.10025 9.74678 2.88501 9.78534C3.69455 9.83217 6.12591 9.83217 6.93545 9.78534C7.72296 9.74678 8.4196 9.56775 8.99233 8.9921C9.56507 8.41921 9.7468 7.71962 9.78535 6.93464C9.83216 6.12488 9.83216 3.69558 9.78535 2.88306V2.88582ZM8.73901 7.80775C8.56829 8.23743 8.23787 8.56794 7.80556 8.74146C7.15849 8.99761 5.62477 8.93977 4.91161 8.93977C4.19844 8.93977 2.66197 8.99761 2.01765 8.74146C1.5881 8.5707 1.25767 8.24018 1.0842 7.80775C0.828124 7.16049 0.885948 5.62635 0.885948 4.91298C0.885948 4.19962 0.828124 2.66272 1.0842 2.01821C1.25492 1.58854 1.58534 1.25803 2.01765 1.08451C2.66473 0.828356 4.19844 0.886196 4.91161 0.886196C5.62477 0.886196 7.16124 0.828356 7.80556 1.08451C8.23512 1.25527 8.56554 1.58579 8.73901 2.01821C8.99509 2.66548 8.93726 4.19962 8.93726 4.91298C8.93726 5.62635 8.99509 7.16325 8.73901 7.80775Z" fill="black"></path>
-                                </g>
-                            </svg>
-                        </a>
+            {/* Mobile Menu Overlay */}
+            <div
+                className={`fixed inset-0 z-40 bg-white transition-all duration-400 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+                style={{ paddingTop: '72px' }}
+            >
+                <div className="flex flex-col h-full overflow-y-auto">
+                    {/* Orange top accent */}
+                    <div className="h-1 bg-gradient-to-r from-[#FF6B00] via-[#FF8C33] to-[#FF6B00] w-full"></div>
 
-                        {/* Twitter/X */}
-                        <a
-                            href="https://x.com/thekmigroup"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <svg width="42" height="42" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="10" cy="10" r="9.375" fill="none" stroke="black" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke"></circle>
-                                <g transform="translate(5,5) scale(0.5)">
-                                    <path d="M6.67102 5.36279L13.2324 13.7454H14.2334L7.74486 5.36279H6.67102Z" fill="black"></path>
-                                    <path d="M12.7314 14.7979L9.87386 11.1507L6.59774 14.7979H4.78677L9.01843 10.0713L4.55017 4.35233H8.2904L10.8749 7.69492L13.8689 4.35233H15.6799L11.7212 8.783L16.3806 14.7979H12.7314Z" fill="black"></path>
-                                </g>
-                            </svg>
-                        </a>
+                    <div className="flex-1 px-6 py-8">
+                        {/* Navigation Links */}
+                        <ul className="flex flex-col gap-2 mb-8">
+                            {navigationLinks.map((link, index) => (
+                                <li key={index} className="border-b border-gray-100 last:border-0">
+                                    {link.href.startsWith('/') ? (
+                                        <Link
+                                            to={link.href}
+                                            className="flex items-center justify-between py-4 text-[18px] font-bold text-gray-800 hover:text-[#FF6B00] transition-colors no-underline"
+                                            onClick={() => setIsMenuOpen(false)}
+                                        >
+                                            {link.text}
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                                <path d="m9 18 6-6-6-6" />
+                                            </svg>
+                                        </Link>
+                                    ) : (
+                                        <a
+                                            href={link.href}
+                                            className="flex items-center justify-between py-4 text-[18px] font-bold text-gray-800 hover:text-[#FF6B00] transition-colors no-underline"
+                                            target={link.target || '_self'}
+                                            rel={link.target ? 'noopener noreferrer' : ''}
+                                            onClick={() => setIsMenuOpen(false)}
+                                        >
+                                            {link.text}
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                                <path d="m9 18 6-6-6-6" />
+                                            </svg>
+                                        </a>
+                                    )}
+                                </li>
+                            ))}
+                        </ul>
 
-                        {/* Pinterest */}
-                        <a
-                            href="https://www.pinterest.com/kmigroup/"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                        {/* Logout Button */}
+                        <button
+                            onClick={() => { setIsMenuOpen(false); handleLogout(); }}
+                            className="w-full py-4 bg-[#FF6B00] text-white font-bold text-[16px] rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-orange-200"
                         >
-                            <svg width="42" height="42" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="10" cy="10" r="9.375" fill="none" stroke="black" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke"></circle>
-                                <g transform="translate(5,5) scale(0.50)">
-                                    <path d="M6.08572 18.4946C6.00194 17.737 5.92634 16.5718 6.11897 15.7448
-                                    C6.29289 14.9975 7.24173 10.9854 7.24173 10.9854
-                                    C7.24173 10.9854 6.95526 10.4118 6.95526 9.56373
-                                    C6.95526 8.23235 7.72695 7.23836 8.68786 7.23836
-                                    C9.50471 7.23836 9.89938 7.85169 9.89938 8.58715
-                                    C9.89938 9.40878 9.37632 10.6369 9.1063 11.7751
-                                    C8.88076 12.7283 9.58427 13.5055 10.5243 13.5055
-                                    C12.2262 13.5055 13.5344 11.7111 13.5344 9.12075
-                                    C13.5344 6.82824 11.8869 5.2253 9.53474 5.2253
-                                    C6.81028 5.2253 5.21109 7.26877 5.21109 9.38058
-                                    C5.21109 10.2036 5.52808 11.086 5.92369 11.5657
-                                    C6.00186 11.6605 6.01338 11.7436 5.99011 11.8403
-                                    C5.91737 12.1428 5.7559 12.7932 5.72414 12.9263
-                                    C5.68236 13.1015 5.58534 13.1387 5.40393 13.0543
-                                    C4.20802 12.4975 3.46036 10.7493 3.46036 9.34489
-                                    C3.46036 6.32443 5.65487 3.55062 9.787 3.55062
-                                    C13.1086 3.55062 15.69 5.91744 15.69 9.08062
-                                    C15.69 12.3806 13.6093 15.0363 10.7213 15.0363
-                                    C9.75105 15.0363 8.83889 14.5323 8.52674 13.9369
-                                    C8.52674 13.9369 8.0465 15.7651 7.93012 16.2131
-                                    C7.71386 17.0449 7.13038 18.0874 6.74005 18.7233Z" fill="black"></path>
-                                </g>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                <polyline points="16 17 21 12 16 7" />
+                                <line x1="21" y1="12" x2="9" y2="12" />
                             </svg>
-                        </a>
+                            Logout
+                        </button>
+                    </div>
+
+                    {/* Mobile Social */}
+                    <div className="px-6 py-6 border-t border-gray-100 bg-gray-50">
+                        <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Follow RankSol</p>
+                        <div className="flex items-center gap-3">
+                            {socialLinks.map((social, i) => (
+                                <a
+                                    key={i}
+                                    href={social.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={social.label}
+                                    className="w-10 h-10 rounded-xl bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:text-[#FF6B00] hover:border-orange-200 transition-all shadow-sm"
+                                >
+                                    {social.icon}
+                                </a>
+                            ))}
+                        </div>
+                        <p className="text-xs text-gray-400 mt-4">© {new Date().getFullYear()} RankSol. All rights reserved.</p>
                     </div>
                 </div>
             </div>
-        </div>
+
+            {/* Spacer for fixed header */}
+            <div className="h-[72px]"></div>
+        </>
     );
 };
 

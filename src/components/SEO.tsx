@@ -3,19 +3,28 @@ import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 
 interface SEOProps {
+    title?: string;
+    description?: string;
     canonicalUrl?: string;
 }
 
-const SEO: React.FC<SEOProps> = ({ canonicalUrl }) => {
+const SEO: React.FC<SEOProps> = ({ title, description, canonicalUrl }) => {
     const location = useLocation();
-    const baseUrl = 'https://designstudio.kmigroups.com';
+    const baseUrl = 'https://studio.ranksol.com';
 
-    // Construct the canonical URL if not provided
     const fullUrl = canonicalUrl || `${baseUrl}${location.pathname}${location.search}`;
-    console.log("fullUrl===>", fullUrl)
+
+    const defaultTitle = 'RankSol Design Studio — AI-Powered Interior Visualization';
+    const defaultDescription = 'RankSol Design Studio: Visualize and transform any room with AI-powered hotspot technology. Explore premium interior templates built by RankSol.';
+
     return (
         <Helmet>
+            <title>{title || defaultTitle}</title>
+            <meta name="description" content={description || defaultDescription} />
             <link rel="canonical" href={fullUrl} />
+            <meta property="og:title" content={title || defaultTitle} />
+            <meta property="og:description" content={description || defaultDescription} />
+            <meta property="og:url" content={fullUrl} />
         </Helmet>
     );
 };

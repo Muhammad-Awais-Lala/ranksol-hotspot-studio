@@ -197,37 +197,39 @@ const Studio: React.FC<StudioProps> = ({ onBack }) => {
     return (
         <>
             <SEO />
-            <div className="max-w-7xl mx-auto px-6 pt-10">
+            <div className="max-w-7xl mx-auto px-6 pt-6">
                 <button
                     onClick={onBack}
-                    className="flex items-start gap-2 text-slate-400 hover:text-slate-900 transition-colors group"
+                    className="flex items-center gap-2 text-gray-500 hover:text-[#FF6B00] transition-colors group"
                 >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="m15 18-6-6 6-6" /></svg>
-                    <span className="text-xs font-black uppercase tracking-widest">Back to Templates</span>
+                    <div className="w-7 h-7 rounded-lg bg-gray-100 flex items-center justify-center group-hover:bg-orange-50 transition-colors">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="m15 18-6-6 6-6" /></svg>
+                    </div>
+                    <span className="text-xs font-bold uppercase tracking-widest">Back to Templates</span>
                 </button>
             </div>
-            <div className="min-h-screen bg-slate-50 flex flex-col font-sans selection:bg-indigo-100 overflow-x-hidden">
+            <div className="min-h-screen bg-gray-50 flex flex-col font-sans selection:bg-orange-100 overflow-x-hidden">
 
                 <main className="flex-1 flex flex-col lg:flex-row p-3 lg:p-6 gap-4 lg:gap-8 max-w-[1920px] mx-auto w-full overflow-hidden">
                     {/* Main Viewport */}
-                    <div className="flex-[1.5] flex flex-col bg-white rounded-3xl lg:rounded-[2.5rem] shadow-2xl shadow-slate-200 border border-slate-200 overflow-hidden relative min-h-[50vh] lg:min-h-0">
-                        <div className="px-4 lg:px-10 py-4 lg:py-5 border-b border-slate-100 flex items-center justify-between bg-white/80 backdrop-blur-md sticky top-0 z-30">
+                    <div className="flex-[1.5] flex flex-col bg-white rounded-3xl lg:rounded-[2.5rem] shadow-2xl shadow-gray-200 border border-gray-200 overflow-hidden relative min-h-[50vh] lg:min-h-0">
+                        <div className="px-4 lg:px-10 py-4 lg:py-5 border-b border-gray-100 flex items-center justify-between bg-white/90 backdrop-blur-md sticky top-0 z-30">
                             <div className="flex items-center gap-2 lg:gap-3">
                                 <div className={`w-2 h-2 lg:w-2.5 lg:h-2.5 rounded-full shadow-lg ${status === AppStatus.ERROR ? 'bg-red-500' : 'bg-green-500 animate-pulse'}`} />
-                                <h2 className="text-[10px] lg:text-sm font-black text-slate-800 uppercase tracking-widest truncate max-w-[150px] lg:max-w-none">
+                                <h2 className="text-[10px] lg:text-sm font-black text-[#0A0A0A] uppercase tracking-widest truncate max-w-[150px] lg:max-w-none">
                                     {roomName}
                                 </h2>
                             </div>
                             <button
                                 onClick={downloadImage}
-                                className="px-3 lg:px-6 py-2 lg:py-3 bg-slate-900 text-white text-[9px] lg:text-[10px] font-black rounded-lg lg:rounded-xl hover:bg-slate-800 transition-all shadow-xl active:scale-95 uppercase tracking-widest flex items-center gap-2"
+                                className="px-3 lg:px-6 py-2 lg:py-3 bg-[#FF6B00] text-white text-[9px] lg:text-[10px] font-black rounded-lg lg:rounded-xl hover:bg-[#E05E00] transition-all shadow-xl shadow-orange-200 active:scale-95 uppercase tracking-widest flex items-center gap-2"
                             >
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
                                 <span className="hidden sm:inline">Download</span>
                             </button>
                         </div>
 
-                        <div className="relative flex-1 bg-slate-50 flex items-center justify-center p-4 lg:p-12 overflow-hidden">
+                        <div className="relative flex-1 bg-gray-50 flex items-center justify-center p-4 lg:p-12 overflow-hidden">
                             <div className="relative max-w-full h-full flex items-center justify-center">
                                 <div className="relative shadow-2xl rounded-3xl overflow-hidden bg-white ring-1 ring-slate-900/5">
                                     <img
@@ -246,8 +248,8 @@ const Studio: React.FC<StudioProps> = ({ onBack }) => {
                                     {(status === AppStatus.FETCHING || status === AppStatus.EDITING) && (
                                         <div className="absolute inset-0 z-40 bg-white/30 backdrop-blur-2xl flex flex-col items-center justify-center">
                                             <div className="relative w-16 lg:w-24 h-16 lg:h-24 mb-4 lg:mb-8">
-                                                <div className="absolute inset-0 border-3 lg:border-4 border-slate-200 rounded-full" />
-                                                <div className="absolute inset-0 border-3 lg:border-4 border-t-[#E8E237] rounded-full animate-spin" />
+                                                <div className="absolute inset-0 border-3 lg:border-4 border-orange-100 rounded-full" />
+                                                <div className="absolute inset-0 border-3 lg:border-4 border-t-[#FF6B00] rounded-full animate-spin" />
                                             </div>
                                             <p className="text-[9px] lg:text-xs font-black text-slate-900 tracking-[0.3em] lg:tracking-[0.5em] uppercase animate-pulse px-4 text-center">
                                                 {status === AppStatus.FETCHING ? 'Initializing Studio' : 'Processing...'}
@@ -269,7 +271,7 @@ const Studio: React.FC<StudioProps> = ({ onBack }) => {
                     </div>
 
                     {/* Sidebar Controls */}
-                    <aside className="lg:w-[400px] xl:w-[450px] flex flex-col gap-4 lg:gap-6 h-[600px] lg:h-auto min-h-[450px] lg:min-h-0 overflow-hidden lg:overflow-visible">
+                    <aside className="lg:w-[380px] xl:w-[420px] flex flex-col gap-4 lg:gap-6 h-[600px] lg:h-auto min-h-[450px] lg:min-h-0 overflow-hidden lg:overflow-visible">
                         {/* Tab Navigation for Mobile */}
                         <div className="flex lg:hidden bg-white p-1 rounded-2xl shadow-lg border border-slate-200 gap-1">
                             {/* <button
@@ -280,7 +282,7 @@ const Studio: React.FC<StudioProps> = ({ onBack }) => {
                         </button> */}
                             <button
                                 onClick={() => setActiveTab('materials')}
-                                className={`flex-1 py-3 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${activeTab === 'materials' ? 'bg-[#E8E237] text-slate-900 shadow-md' : 'text-slate-400'}`}
+                                className={`flex-1 py-3 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${activeTab === 'materials' ? 'bg-[#FF6B00] text-white shadow-md' : 'text-gray-400'}`}
                             >
                                 Materials
                             </button>
@@ -351,36 +353,48 @@ const Studio: React.FC<StudioProps> = ({ onBack }) => {
                     </div> */}
 
                         {/* Material Suite Panel */}
-                        <div className={`${activeTab === 'materials' ? 'flex' : 'flex'} lg:flex bg-white rounded-3xl p-5 lg:p-6 border border-slate-200 shadow-xl flex-1 lg:flex-none flex flex-col min-h-0 lg:min-h-0 overflow-hidden lg:overflow-visible`}>
+                        <div className={`${activeTab === 'materials' ? 'flex' : 'flex'} lg:flex bg-white rounded-3xl p-5 lg:p-6 border border-gray-200 shadow-xl flex-1 lg:flex-none flex flex-col min-h-0 lg:min-h-0 overflow-hidden lg:overflow-visible`}>
                             <div className="flex items-center justify-between mb-6">
-                                <h3 className="text-[10px] lg:text-xs font-black uppercase tracking-widest text-slate-900">Select Material</h3>
-                                {selectedSpot && <button onClick={() => setActiveTab('elements')} className="lg:hidden text-[9px] font-black text-[#D7D126] uppercase">Change Area</button>}
+                                <div className="flex items-center gap-2">
+                                    <div className="w-1 h-4 bg-[#FF6B00] rounded-full"></div>
+                                    <h3 className="text-[10px] lg:text-xs font-black uppercase tracking-widest text-[#0A0A0A]">Select Material</h3>
+                                </div>
+                                {selectedSpot && <button onClick={() => setActiveTab('elements')} className="lg:hidden text-[9px] font-black text-[#FF6B00] uppercase">Change Area</button>}
                             </div>
 
                             {!selectedSpot ? (
-                                <div className="flex-1 flex flex-col items-center justify-center text-center opacity-40 p-4">
-                                    <div className="w-12 lg:w-16 h-12 lg:h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-4 border-2 border-dashed border-slate-200">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 20v-6M9 20v-10M15 20v-2M18 20v-8M21 20V4M6 20v-4M3 20v-2" /></svg>
+                                <div className="flex-1 flex flex-col items-center justify-center text-center p-4">
+                                    <div className="w-14 lg:w-16 h-14 lg:h-16 bg-orange-50 rounded-2xl flex items-center justify-center mb-4 border-2 border-dashed border-orange-200">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF6B00" strokeWidth="2">
+                                            <circle cx="12" cy="12" r="3" />
+                                            <path d="M12 5v2M12 17v2M5 12H3M21 12h-2M7.05 7.05L5.636 5.636M18.364 18.364l-1.414-1.414M7.05 16.95l-1.414 1.414M18.364 5.636l-1.414 1.414" />
+                                        </svg>
                                     </div>
-                                    <p className="text-[9px] lg:text-[10px] font-black uppercase tracking-widest px-4">Select an area from the 'Elements' tab OR Click on the hotspot on the image</p>
+                                    <p className="text-[10px] lg:text-[11px] font-black text-[#FF6B00] uppercase tracking-widest px-4 mb-2">Select a Hotspot</p>
+                                    <p className="text-[9px] text-gray-400 font-medium px-4">Click on any glowing point on the image to choose a design area</p>
                                 </div>
                             ) : (
                                 <div className="flex-1 flex flex-col overflow-hidden lg:overflow-visible">
-                                    <div className="mb-4 lg:mb-6 p-3 lg:p-4 bg-[#E8E237] rounded-xl lg:rounded-2xl text-slate-900 shadow-lg shadow-yellow-100 flex items-center justify-between">
-                                        <div className="min-w-0">
-                                            <span className="text-[8px] lg:text-[9px] font-black text-yellow-700/60 uppercase tracking-widest block mb-0.5 lg:mb-1">To Apply On</span>
-                                            <p className="text-xs lg:text-sm font-black truncate uppercase tracking-tight">{selectedSpot.label}</p>
+                                    <div className="mb-4 lg:mb-6 p-3 lg:p-4 bg-[#0A0A0A] rounded-xl lg:rounded-2xl text-white shadow-lg shadow-black/20 flex items-center justify-between">
+                                        <div className="min-w-0 flex items-center gap-3">
+                                            <div className="w-8 h-8 rounded-xl bg-[#FF6B00]/20 flex items-center justify-center flex-shrink-0">
+                                                <div className="w-2 h-2 rounded-full bg-[#FF6B00] animate-pulse"></div>
+                                            </div>
+                                            <div>
+                                                <span className="text-[8px] lg:text-[9px] font-bold text-gray-400 uppercase tracking-widest block mb-0.5">Editing Area</span>
+                                                <p className="text-xs lg:text-sm font-black truncate uppercase tracking-tight text-white">{selectedSpot.label}</p>
+                                            </div>
                                         </div>
-                                        <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center lg:hidden" onClick={() => setActiveTab('elements')}>
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M11 4H4v14a2 2 0 002 2h12a2 2 0 002-2v-5M18 9l3 3-3 3M21 12H9" /></svg>
+                                        <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center lg:hidden cursor-pointer hover:bg-white/20" onClick={() => setActiveTab('elements')}>
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="m15 18-6-6 6-6" /></svg>
                                         </div>
                                     </div>
 
                                     <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-3 gap-2 lg:gap-3 overflow-y-auto lg:overflow-visible pr-1 lg:pr-0 custom-scrollbar flex-1 min-h-0 content-start">
                                         {loadingSheets && sheets.length === 0 ? (
                                             <div className="col-span-full py-12 text-center">
-                                                <div className="w-8 h-8 border-3 border-slate-200 border-t-yellow-400 rounded-full animate-spin mx-auto mb-4" />
-                                                <p className="text-[9px] lg:text-[10px] font-black uppercase tracking-widest text-slate-400">Loading catalog...</p>
+                                                <div className="w-8 h-8 border-2 border-orange-100 border-t-[#FF6B00] rounded-full animate-spin mx-auto mb-4" />
+                                                <p className="text-[9px] lg:text-[10px] font-bold uppercase tracking-widest text-gray-400">Loading catalog...</p>
                                             </div>
                                         ) : (
                                             <>
@@ -389,43 +403,40 @@ const Studio: React.FC<StudioProps> = ({ onBack }) => {
                                                         key={sheet.id}
                                                         onClick={() => setPendingSheet(sheet)}
                                                         disabled={status === AppStatus.EDITING}
-                                                        className={`group flex flex-col p-1.5 lg:p-2 bg-slate-50 rounded-xl lg:rounded-2xl border-2 transition-all disabled:opacity-40 ${pendingSheet?.id === sheet.id ? 'border-[#E8E237] bg-white ring-2 ring-[#E8E237]/20 shadow-xl lg:scale-105' : 'border-transparent hover:border-yellow-200 hover:bg-white hover:shadow-lg'}`}
+                                                        className={`group flex flex-col p-1.5 lg:p-2 bg-gray-50 rounded-xl lg:rounded-2xl border-2 transition-all disabled:opacity-40 ${pendingSheet?.id === sheet.id ? 'border-[#FF6B00] bg-white ring-2 ring-[#FF6B00]/20 shadow-xl lg:scale-105' : 'border-transparent hover:border-orange-200 hover:bg-white hover:shadow-lg'}`}
                                                     >
                                                         <div className="w-full aspect-square rounded-lg lg:rounded-xl mb-1.5 lg:mb-2 shadow-inner overflow-hidden">
                                                             <img src={sheet.thumbnail || sheet.path} alt={sheet.name} className="w-full h-full object-cover" />
                                                         </div>
-                                                        <span className="text-[8px] lg:text-[9px] font-black text-slate-800 uppercase tracking-tight truncate w-full text-center">{sheet.name}</span>
+                                                        <span className="text-[8px] lg:text-[9px] font-black text-[#0A0A0A] uppercase tracking-tight truncate w-full text-center">{sheet.name}</span>
                                                     </button>
                                                 ))}
 
                                                 {/* Pagination Controls */}
                                                 {pagination && pagination.total > 0 && (
-                                                    <div className="col-span-full flex items-center justify-between gap-3 pt-3 mt-2 border-t border-slate-200">
+                                                    <div className="col-span-full flex items-center justify-between gap-3 pt-3 mt-2 border-t border-gray-100">
                                                         <button
                                                             onClick={handlePreviousPage}
                                                             disabled={loadingSheets || currentPage === 1}
-                                                            className="flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 active:scale-95 disabled:bg-slate-50 disabled:text-slate-300 disabled:cursor-not-allowed rounded-xl text-[9px] font-black uppercase tracking-widest transition-all shadow-sm"
+                                                            className="flex items-center gap-2 px-3 py-2 bg-gray-100 hover:bg-orange-50 hover:text-[#FF6B00] active:scale-95 disabled:bg-gray-50 disabled:text-gray-300 disabled:cursor-not-allowed rounded-xl text-[9px] font-black uppercase tracking-widest transition-all"
                                                             title={currentPage === 1 ? 'You are on the first page' : 'Go to previous page'}
                                                         >
                                                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                                                                 <polyline points="15 18 9 12 15 6" />
                                                             </svg>
-                                                            <span className="hidden sm:inline">Previous</span>
+                                                            <span className="hidden sm:inline">Prev</span>
                                                         </button>
 
-                                                        <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 rounded-xl">
-                                                            <span className="text-[9px] font-black text-slate-900">{currentPage}</span>
-                                                            <span className="text-[8px] text-slate-400">/</span>
-                                                            <span className="text-[9px] font-black text-slate-600">{pagination.last_page}</span>
-                                                            <span className="ml-1 text-[7px] font-bold text-slate-400 uppercase tracking-wider hidden sm:inline">
-                                                                ({pagination.total} total)
-                                                            </span>
+                                                        <div className="flex items-center gap-1.5 px-3 py-2 bg-gray-50 rounded-xl border border-gray-200">
+                                                            <span className="text-[9px] font-black text-[#FF6B00]">{currentPage}</span>
+                                                            <span className="text-[8px] text-gray-300">/</span>
+                                                            <span className="text-[9px] font-black text-gray-600">{pagination.last_page}</span>
                                                         </div>
 
                                                         <button
                                                             onClick={handleNextPage}
                                                             disabled={loadingSheets || currentPage >= pagination.last_page}
-                                                            className="flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 active:scale-95 disabled:bg-slate-50 disabled:text-slate-300 disabled:cursor-not-allowed rounded-xl text-[9px] font-black uppercase tracking-widest transition-all shadow-sm"
+                                                            className="flex items-center gap-2 px-3 py-2 bg-gray-100 hover:bg-orange-50 hover:text-[#FF6B00] active:scale-95 disabled:bg-gray-50 disabled:text-gray-300 disabled:cursor-not-allowed rounded-xl text-[9px] font-black uppercase tracking-widest transition-all"
                                                             title={currentPage >= pagination.last_page ? 'You are on the last page' : 'Go to next page'}
                                                         >
                                                             <span className="hidden sm:inline">Next</span>
@@ -437,19 +448,19 @@ const Studio: React.FC<StudioProps> = ({ onBack }) => {
                                                 )}
 
                                                 {!loadingSheets && sheets.length === 0 && (
-                                                    <div className="col-span-full py-8 lg:py-12 text-center opacity-40">
-                                                        <p className="text-[9px] font-black uppercase tracking-widest">No materials found</p>
+                                                    <div className="col-span-full py-8 lg:py-12 text-center">
+                                                        <p className="text-[9px] font-bold uppercase tracking-widest text-gray-400">No materials found</p>
                                                     </div>
                                                 )}
                                             </>
                                         )}
                                     </div>
 
-                                    <div className="mt-4 pt-4 border-t border-slate-100">
+                                    <div className="mt-4 pt-4 border-t border-gray-100">
                                         <button
                                             onClick={confirmApplySheet}
                                             disabled={!pendingSheet || status === AppStatus.EDITING || error === "No remaining requests"}
-                                            className="w-full py-3.5 lg:py-4 bg-[#EFE223] disabled:bg-slate-200 disabled:text-slate-400 text-black rounded-xl font-black uppercase text-[10px] lg:text-[11px] tracking-widest transition-all shadow-xl hover:bg-[#EFE123] active:scale-95 flex items-center justify-center gap-2"
+                                            className="w-full py-3.5 lg:py-4 bg-[#FF6B00] disabled:bg-gray-200 disabled:text-gray-400 text-white rounded-xl font-black uppercase text-[10px] lg:text-[11px] tracking-widest transition-all shadow-xl shadow-orange-200 hover:bg-[#E05E00] active:scale-95 flex items-center justify-center gap-2"
                                         >
                                             {status === AppStatus.EDITING ? (
                                                 <>
@@ -458,8 +469,8 @@ const Studio: React.FC<StudioProps> = ({ onBack }) => {
                                                 </>
                                             ) : (
                                                 <>
-                                                    <span>Apply Texture</span>
                                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12l5 5L20 7" /></svg>
+                                                    <span>Apply Texture</span>
                                                 </>
                                             )}
                                         </button>
@@ -473,7 +484,7 @@ const Studio: React.FC<StudioProps> = ({ onBack }) => {
                 <style>{`
                 .custom-scrollbar::-webkit-scrollbar { width: 4px; }
                 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-                .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 20px; }
+                .custom-scrollbar::-webkit-scrollbar-thumb { background: #FF6B00; border-radius: 20px; opacity: 0.5; }
                 @media (max-width: 1024px) {
                     .custom-scrollbar::-webkit-scrollbar { width: 0px; }
                 }
