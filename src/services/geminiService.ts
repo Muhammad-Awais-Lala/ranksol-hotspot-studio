@@ -7,6 +7,11 @@ import { API_KEY, MODELS } from "../../constants";
  * Compresses an image string or file to ensure it's below a size threshold
  */
 async function compressImage(dataUrl: string, maxWidth = 1280, quality = 0.9): Promise<string> {
+  let urlToLoad = dataUrl;
+  if (import.meta.env.DEV && urlToLoad.startsWith('https://aistudio.ranksol.net/storage')) {
+    urlToLoad = urlToLoad.replace('https://aistudio.ranksol.net', '');
+  }
+
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.crossOrigin = "anonymous";
@@ -35,7 +40,7 @@ async function compressImage(dataUrl: string, maxWidth = 1280, quality = 0.9): P
       }
     };
     img.onerror = () => reject(new Error("Failed to load image for compression"));
-    img.src = dataUrl;
+    img.src = urlToLoad;
   });
 }
 

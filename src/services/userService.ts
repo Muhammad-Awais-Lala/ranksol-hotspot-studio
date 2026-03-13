@@ -25,6 +25,12 @@ export async function checkRequestLimit(token: string): Promise<RequestLimitResp
         });
         return response.data;
     } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('auth_user');
+            window.location.href = '/login';
+            return Promise.reject(new Error("Session expired. Please log in again."));
+        }
         if (error.response && error.response.status === 403) {
             // Re-throw the specific error message from server
             throw new Error(error.response.data.error || "No remaining requests");

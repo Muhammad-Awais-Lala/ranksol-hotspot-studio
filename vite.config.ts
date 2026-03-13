@@ -10,6 +10,12 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 3000,
       host: '0.0.0.0',
+      proxy: {
+        '/storage': {
+          target: 'https://aistudio.ranksol.net',
+          changeOrigin: true
+        }
+      }
     },
     plugins: [react()],
     define: {

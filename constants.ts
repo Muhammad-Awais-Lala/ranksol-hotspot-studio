@@ -4,7 +4,7 @@ import { ColorOption } from './types';
 
 
 // API Base URL
-export const API_BASE_URL = 'https://kmigroups.com/api';
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // Ultra-optimized low-cost rendering pricing
 export const COST_PER_RENDER_PKR = 3.5;

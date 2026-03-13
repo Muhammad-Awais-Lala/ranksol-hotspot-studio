@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SEO from '../components/SEO';
+import { API_BASE_URL } from '../../constants';
 
 interface Category {
     id: number;
@@ -27,7 +28,7 @@ const Home: React.FC<HomeProps> = ({ onSelectRoom }) => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await axios.get('https://kmigroups.com/api/portfolio-categories');
+                const response = await axios.get(`${API_BASE_URL}/portfolio-categories`);
                 setCategories(response.data);
                 setLoading(false);
             } catch (err) {
